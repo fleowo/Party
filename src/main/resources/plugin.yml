@@ -1,0 +1,9 @@
+name: Party
+version: '${project.version}'
+main: fleowo.main.PartyPlugin
+api-version: '1.19'
+
+commands:
+  party:
+    description: main command.
+    aliases: [p]
