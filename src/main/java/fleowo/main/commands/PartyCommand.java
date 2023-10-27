@@ -10,7 +10,6 @@ import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
 public class PartyCommand implements CommandExecutor {
-    public static final String PARTY_COMMAND = "party";
 
     public boolean onCommand(@NotNull CommandSender commandSender, @NotNull Command command, @NotNull String s, @NotNull String[] args) {
         if (command.getName().equalsIgnoreCase("party")) {
@@ -23,7 +22,7 @@ public class PartyCommand implements CommandExecutor {
                         if (command1.verifyArgs(args.length)) {
                             command1.process(args, player);
                         } else {
-                            player.sendMessage(ChatColor.GRAY + command1.getFirstArg() + " : " + command1.getUsage());
+                            player.sendMessage(ChatColor.RED +"Usage: " + command1.getUsage());
                         }
                         return true;
                     }
@@ -39,8 +38,8 @@ public class PartyCommand implements CommandExecutor {
     }
 
     private static void provideHelp(Player player) {
-        player.sendMessage(ChatColor.YELLOW + "Available commands :");
+        player.sendMessage(ChatColor.YELLOW + "Party Commands:");
         for (SinglePartyCommand command1 : CommandsList.getCommands())
-            player.sendMessage(ChatColor.GRAY + command1.getFirstArg() + ChatColor.GRAY + " : " + ChatColor.RED + command1.getUsage());
+            player.sendMessage(ChatColor.GRAY + command1.getFirstArg() + ChatColor.GRAY + ": " + ChatColor.RED + command1.getUsage());
     }
 }

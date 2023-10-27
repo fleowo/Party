@@ -11,7 +11,7 @@ import org.bukkit.entity.Player;
 
 public class InviteCommand extends SinglePartyCommand {
     public InviteCommand() {
-        super("/party invite <player>", "invite", 2, "Invite a player in your party");
+        super(ChatColor.RED + "/party invite <player>", "invite", 2, "Invite a player in your party");
     }
 
     public void process(String[] args, Player player) {
@@ -40,7 +40,7 @@ public class InviteCommand extends SinglePartyCommand {
             player.sendMessage(ChatColor.RED + "This player already has a party");
             return;
         }
-        if (PartyManager.getInstance().getParty(player).getMembers().size() >= 10) {
+        if (PartyManager.getInstance().getParty(player).getMembers().size() >= 5) {
             player.sendMessage(ChatColor.RED + "The party already has the maximum amount of player");
             return;
         }

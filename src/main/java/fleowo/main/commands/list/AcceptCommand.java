@@ -24,7 +24,7 @@ public class AcceptCommand extends SinglePartyCommand {
             return;
         }
         PartyInvitation invitation = InvitationManager.getInstance().getInvitation(player);
-        if (PartyManager.getInstance().getParty(invitation.getInvitationSender()).getMembers().size() >= 10) {
+        if (PartyManager.getInstance().getParty(invitation.getInvitationSender()).getMembers().size() >= 5) {
             player.sendMessage(ChatColor.RED + "The party already has the maximum amount of player");
             return;
         }

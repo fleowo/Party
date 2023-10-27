@@ -5,8 +5,8 @@ import fleowo.main.gui.PartyInventory;
 import org.bukkit.Bukkit;
 import org.bukkit.NamespacedKey;
 import org.bukkit.OfflinePlayer;
+import org.bukkit.Sound;
 import org.bukkit.entity.Player;
-import org.bukkit.event.Event;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -42,25 +42,29 @@ public class InventoryItemAction {
             return;
         this.player.closeInventory();
         if (action.equals("party.inventory")) {
+            player.playSound(player.getLocation(), Sound.UI_BUTTON_CLICK, 0.5F ,1F);
             PartyInventory.giveInventory(this.player);
         } else if (action.startsWith("member.inventory")) {
             String memberName = action.split("\\.")[2];
             OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayer(memberName);
+            player.playSound(player.getLocation(), Sound.UI_BUTTON_CLICK, 0.5F ,1F);
             MemberInventory.giveInventory(this.player, offlinePlayer);
         } else if (action.equals("party.delete")) {
             PlayerCommandPreprocessEvent event = new PlayerCommandPreprocessEvent(this.player, "/party leave");
-            Bukkit.getServer().getPluginManager().callEvent((Event)event);
+            Bukkit.getServer().getPluginManager().callEvent(event);
             if (!event.isCancelled())
                 this.player.performCommand("party leave");
         } else if (action.startsWith("party.kick")) {
             String memberName = action.split("\\.")[2];
             PlayerCommandPreprocessEvent event = new PlayerCommandPreprocessEvent(this.player, "/party kick " + memberName);
-            Bukkit.getServer().getPluginManager().callEvent((Event)event);
+            Bukkit.getServer().getPluginManager().callEvent(event);
             if (!event.isCancelled())
                 this.player.performCommand("party kick " + memberName);
         } else if (action.startsWith("party.owner")) {
             String memberName = action.split("\\.")[2];
             this.player.performCommand("party setowner " + memberName);
+        }  else if (action.equals("party.close")) {
+            player.closeInventory();
         }
     }
 }

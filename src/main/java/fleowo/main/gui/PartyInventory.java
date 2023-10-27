@@ -1,7 +1,6 @@
 package fleowo.main.gui;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
 import fleowo.main.mechanics.Party;
 import fleowo.main.mechanics.PartyManager;
@@ -25,34 +24,39 @@ public class PartyInventory {
 
     private static void giveOwnerInventory(Player player) {
         Party party = PartyManager.getInstance().getParty(player);
-        Inventory inventory = Bukkit.createInventory(player, 54, ChatColor.GRAY + "Your party");
+        Inventory inventory = Bukkit.createInventory(player, 45, "Your party");
         InventoryUtils.fillInventory(inventory, Material.BLACK_STAINED_GLASS_PANE);
         InventoryUtils.addPlayerHead(inventory, party.getOwner().getOfflinePlayer(), "Party owner", 13, null);
         int i;
         for (i = 0; i < party.getMembers().size(); i++) {
             OfflinePlayer member = party.getMembers().get(i).getOfflinePlayer();
-            InventoryUtils.addPlayerHead(inventory, member, "Member", 27 + i, "member.inventory." + member.getName());
+            InventoryUtils.addPlayerHead(inventory, member, "Member", 20 + i, "member.inventory." + member.getName());
         }
-        for (int j = i; j < 10; j++)
-            InventoryUtils.addItem(inventory, Material.GREEN_STAINED_GLASS_PANE, " ", new ArrayList<>(), 27 + j, null);
-        InventoryUtils.addItem(inventory, Material.TNT, ChatColor.RED + "Delete party", Arrays.asList(new String[] { ChatColor.GRAY + "Click to delete the party" }), 16, "party.delete");
+        for (int j = i; j < 5; j++)
+            InventoryUtils.addItem(inventory, Material.GREEN_STAINED_GLASS_PANE, ChatColor.RED + "Empty Slot", new ArrayList<>(), 20 + j, null);
+        InventoryUtils.addItem(inventory, Material.CAULDRON, ChatColor.YELLOW + "Delete party", null, 41, "party.delete");
+        InventoryUtils.addItem(inventory, Material.BARRIER, ChatColor.RED + "Close",null, 40, "party.close");
         InventoryUtils.setPartyInventoryItem(inventory.getItem(0));
+        player.playSound(player.getLocation(), Sound.UI_BUTTON_CLICK, 0.5F ,1F);
         player.openInventory(inventory);
     }
 
     private static void giveMemberInventory(Player player) {
         Party party = PartyManager.getInstance().getParty(player);
-        Inventory inventory = Bukkit.createInventory(player, 54);
+        Inventory inventory = Bukkit.createInventory(player, 45, "Your party");
         InventoryUtils.fillInventory(inventory, Material.BLACK_STAINED_GLASS_PANE);
         InventoryUtils.addPlayerHead(inventory, party.getOwner().getOfflinePlayer(), "Party owner", 13, null);
         int i;
         for (i = 0; i < party.getMembers().size(); i++) {
             OfflinePlayer member = party.getMembers().get(i).getOfflinePlayer();
-            InventoryUtils.addPlayerHead(inventory, member, "Member", 27 + i);
+            InventoryUtils.addPlayerHead(inventory, member, "Member", 20 + i);
         }
-        for (int j = i; j <= 10; j++)
-            InventoryUtils.addItem(inventory, Material.GREEN_STAINED_GLASS_PANE, " ", new ArrayList<>(), 27 + j, (String)null);
+        for (int j = i; j <= 4; j++)
+            InventoryUtils.addItem(inventory, Material.GREEN_STAINED_GLASS_PANE, ChatColor.RED + "Empty Slot", new ArrayList<>(), 20 + j, null);
+        InventoryUtils.addItem(inventory, Material.REDSTONE, ChatColor.YELLOW + "Leave party", null, 41, "party.delete");
+        InventoryUtils.addItem(inventory, Material.BARRIER, ChatColor.RED + "Close",null, 40, "party.close");
         InventoryUtils.setPartyInventoryItem(inventory.getItem(0));
+        player.playSound(player.getLocation(), Sound.UI_BUTTON_CLICK, 0.5F ,1F);
         player.openInventory(inventory);
     }
 

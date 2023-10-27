@@ -5,5 +5,4 @@ api-version: '1.19'
 
 commands:
   party:
-    description: main command.
     aliases: [p]

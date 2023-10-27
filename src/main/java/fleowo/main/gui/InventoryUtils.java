@@ -13,6 +13,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.OfflinePlayer;
+import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -23,7 +24,9 @@ public class InventoryUtils {
     protected static void addPlayerHead(Inventory inventory, OfflinePlayer player, String role, int slot, String action) {
         ItemStack skullOwner = createSkullItem(player);
         ItemMeta meta = skullOwner.getItemMeta();
-        meta.setDisplayName(ChatColor.RED + player.getName());
+
+        String playerName = player.isOnline() ? (((Player) player).getDisplayName()) : (ChatColor.GRAY + player.getName());
+        meta.setDisplayName(playerName);
         String status = player.isOnline() ? (ChatColor.GREEN + "ONLINE") : (ChatColor.RED + "OFFLINE");
         List<PartyValue> toShow = PartyMemberValueManager.getInstance().getValues().values().stream().filter(f -> f.isVisible()).collect(Collectors.toList());
         List<String> list = new ArrayList<>(Arrays.asList(ChatColor.GRAY + "Role : " + ChatColor.BLUE + role, ChatColor.GRAY + "Status : " + status));
